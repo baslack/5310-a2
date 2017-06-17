@@ -74,7 +74,8 @@ def nqueens(x, k, n, node_count = 0, sol_count = 0, start = 1):
             x[k] = i
             # if we have a complete solution vector, print it
             if k == n - 1:
-                print(x)
+                if n in [4,5]:
+                    print(x)
                 #solution found, increment the solution count
                 sol_count += 1
             # else, continue backtracking for the next queen
