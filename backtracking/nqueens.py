@@ -1,3 +1,5 @@
+import sys
+
 def place(x, k ,i):
     """
     n-queens place function. Determines whether or no
@@ -74,10 +76,11 @@ def nqueens(x, k, n, node_count = 0, sol_count = 0, start = 1):
             x[k] = i
             # if we have a complete solution vector, print it
             if k == n - 1:
-                if n in [4,5]:
-                    print(x)
                 #solution found, increment the solution count
                 sol_count += 1
+                if sol_count < 5:
+                    #dumps the board config to std out
+                    boardconfig(x)
             # else, continue backtracking for the next queen
             else:
                 ret_counts = nqueens(x, k + 1, n, node_count, sol_count)
@@ -86,9 +89,29 @@ def nqueens(x, k, n, node_count = 0, sol_count = 0, start = 1):
     return {"node_count":node_count, "sol_count":sol_count}
 
 
+def boardconfig(solution):
+    print("soltion: {0}".format(solution))
+    sys.stdout.write("{0}|".format(len(solution)).rjust(3))
+    for i in range(len(solution)):
+        sys.stdout.write(str(i).rjust(2))
+    sys.stdout.write("\n")
+    for i in range(len(solution)*2+3):
+        sys.stdout.write("-")
+    sys.stdout.write("\n")
+    for i in range(len(solution)):
+        sys.stdout.write("{0}|".format(i).rjust(3))
+        for j in range(len(solution)):
+            if solution[i] == j:
+                sys.stdout.write("1".rjust(2))
+            else:
+                sys.stdout.write("0".rjust(2))
+        sys.stdout.write("\n")
+    sys.stdout.write("\n")
+
+
 if __name__ == "__main__":
     x = list()
-    n = 4
+    n = 3
     for i in range(n):
         x.append(-1)
     print (nqueens(x, 0, n, start=-1))
